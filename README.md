@@ -87,14 +87,14 @@ When prompted for choosing either the Kubeconfig or Token, choose Kubeconfig.  Y
 **Note 2:** When using Mac you may need to hit `CMD` + `SHIFT` + `G` and enter `~/.kube/config` to access the hidden dot-folder.
 
 ### 4. Lab Exercise: Deploy A Spring Boot application with an Elasticsearch Backend
-1. **(Skip this step)** ~~Provision a StorageClass for the Cluster. [This is provisioned at the Kubernetes cluster level and therefore no need to namespace qualify it]~~
+#### 1. **(Skip this step)** ~~Provision a StorageClass for the Cluster.~~ **This is provisioned at the Kubernetes cluster level and therefore no need to namespace qualify it**
 
 <ul>GCP:
   <pre>kubectl create -f https://raw.githubusercontent.com/mmcnichol/pks-workshop/application/master/Step_0_ProvisionStorageClass_GCP.yaml</pre>
 </ul>
 
 
-2. **(Skip this Step)** ~~Create a user defined Namespace. Note: Update the command below to use the namespace that you are going to be delpoying into.~~
+#### 2. **(Skip this Step)** ~~Create a user defined Namespace. Note: Update the command below to use the namespace that you are going to be delpoying into.~~
 <ul>Unix/Mac
 <pre>
 kubectl create namespace geosearch-$(echo $USER_INDEX)
@@ -108,16 +108,16 @@ kubectl config set-context $(kubectl config current-context) --namespace=geosear
 </pre></ul>
 
 
-3. Create Harbor Registry Secret. Use the Registry credentials that was provided to you for this step.
+#### 3. Create Harbor Registry Secret. Use the Registry credentials that was provided to you for this step.
 <ul>Unix/Mac
-  <pre>kubectl create secret docker-registry harborsecret --docker-server="$(echo $HARBOR_REGISTRY_URL)" --docker-username="$(echo $HARBOR_USERNAME)" --docker-password="$(echo $HARBOR_PASSWORD)" --docker-email="$(echo $HARBOR_EMAIL)"</pre>
+<pre>kubectl create secret docker-registry harborsecret --docker-server="$(echo $HARBOR_REGISTRY_URL)" --docker-username="$(echo $HARBOR_USERNAME)" --docker-password="$(echo $HARBOR_PASSWORD)" --docker-email="$(echo $HARBOR_EMAIL)"</pre>
 </ul>
 
 <ul>Windows PowerShell
   <pre>kubectl create secret docker-registry harborsecret --docker-server="$(echo $env:HARBOR_REGISTRY_URL)" --docker-username="$(echo $env:HARBOR_USERNAME)" --docker-password="$(echo $env:HARBOR_PASSWORD)" --docker-email="$(echo $env:HARBOR_EMAIL)"</pre>
 </ul>
 
-4. Create a new Service Account and Image pull secret
+#### 4. Create a new Service Account and Image pull secret
 <ul>Unix/Mac
   <pre>
     kubectl create serviceaccount userserviceaccount
@@ -132,22 +132,22 @@ kubectl config set-context $(kubectl config current-context) --namespace=geosear
   </pre>
 </ul>
 
-5. Create the Storage Volume
+#### 5. Create the Storage Volume
 <ul><pre>kubectl create -f https://raw.githubusercontent.com/gvijayar/pks-workshop/master/Step_1_ProvisionStorage.yaml</pre></ul>
 
-6. Deploy Elastic Search
+#### 6. Deploy Elastic Search
 <ul><pre>kubectl create -f https://raw.githubusercontent.com/gvijayar/pks-workshop/master/Step_2_DeployElasticSearch.yaml</pre></ul>
 
-7. Expose the Elastic Search Service
+#### 7. Expose the Elastic Search Service
 <ul><pre>kubectl create -f https://raw.githubusercontent.com/gvijayar/pks-workshop/master/Step_3_ExposeElasticSearch.yaml</pre></ul>
 
-8. Load the Data via a Job
+#### 8. Load the Data via a Job
 <ul><pre>kubectl create -f https://raw.githubusercontent.com/gvijayar/pks-workshop/master/Step_4_LoadData.yaml</pre></ul>
 
-9. Deploy the SpringBoot Geosearch Application
+#### 9. Deploy the SpringBoot Geosearch Application
 <ul><pre>kubectl create -f https://raw.githubusercontent.com/gvijayar/pks-workshop/master/Step_5_DeploySpringBootApp.yaml</pre></ul>
 
-10. Expose the Spring Boot Application. This can be done in a couple of ways. We will look at two ways of doing it in this example.
+#### 10. Expose the Spring Boot Application. This can be done in a couple of ways. We will look at two ways of doing it in this example.
 
 <ul>Exposing with the LoadBalancer
 	<pre>kubectl create -f https://raw.githubusercontent.com/gvijayar/pks-workshop/master/Step_6_ExposeSpringBootApp.yaml</pre>
@@ -157,5 +157,5 @@ kubectl config set-context $(kubectl config current-context) --namespace=geosear
 	<pre>kubectl create -f https://raw.githubusercontent.com/gvijayar/pks-workshop/master/Step_6_ExposeSpringBootAppIngress.yaml</pre>
 </ul>
 
-11. Scale the Frontend
+#### 11. Scale the Frontend
 <ul><pre>kubectl scale deployment --replicas=3 geosearch</pre></ul>
