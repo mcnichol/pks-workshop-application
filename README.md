@@ -87,24 +87,24 @@ When prompted for choosing either the Kubeconfig or Token, choose Kubeconfig.  Y
 **Note 2:** When using Mac you may need to hit `CMD` + `SHIFT` + `G` and enter `~/.kube/config` to access the hidden dot-folder.
 
 ### 4. Lab Exercise: Deploy A Spring Boot application with an Elasticsearch Backend
-1. **(Skip this step)** Provision a StorageClass for the Cluster. [This is provisioned at the Kubernetes cluster level and therefore no need to namespace qualify it]
+1. **(Skip this step)** ~~Provision a StorageClass for the Cluster. [This is provisioned at the Kubernetes cluster level and therefore no need to namespace qualify it]~~
 
 <ul>GCP:
   <pre>kubectl create -f https://raw.githubusercontent.com/mmcnichol/pks-workshop/application/master/Step_0_ProvisionStorageClass_GCP.yaml</pre>
 </ul>
 
 
-2. **(Skip this Step)** Create a user defined Namespace. Note: Update the command below to use the namespace that you are going to be delpoying into.
+2. **(Skip this Step)** ~~Create a user defined Namespace. Note: Update the command below to use the namespace that you are going to be delpoying into.~~
 <ul>Unix/Mac
-  <pre>
-    kubectl create namespace geosearch-$(echo $USER_INDEX)
-    kubectl config set-context $(kubectl config current-context) --namespace=geosearch-$(echo $USER_INDEX)
-  </pre>
+<pre>
+kubectl create namespace geosearch-$(echo $USER_INDEX)
+kubectl config set-context $(kubectl config current-context) --namespace=geosearch-$(echo $USER_INDEX)
+</pre>
 </ul>
 
 <ul>Windows PowerShell
-  <pre>kubectl create namespace geosearch-$(echo $env:USER_INDEX)
-  kubectl config set-context $(kubectl config current-context) --namespace=geosearch-$(echo $env:USER_INDEX)
+<pre>kubectl create namespace geosearch-$(echo $env:USER_INDEX)
+kubectl config set-context $(kubectl config current-context) --namespace=geosearch-$(echo $env:USER_INDEX)
 </pre></ul>
 
 
