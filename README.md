@@ -5,12 +5,12 @@ This is a sample SpringBoot application that performs Geo Bounded queries agains
 - [1. Install and Setup CLIs](#1-install-and-setup-clis)
 	- [Install PKS CLI](#install-pks-cli)
 	- [Install kubectl CLI](#install-kubectl-cli)
-- [2. Cluster Access and Validation](#2-cluster-access-and-validation)
+- [2. Lab Exercise: Set Environment Variables](#2-lab-exercise-set-environment-variables)
+- [3. Cluster Access and Validation](#3-cluster-access-and-validation)
 	- [Get Cluster Credentials](#get-cluster-credentials)
 	- [Validating your Cluster](#validating-your-cluster)
 	- [Accessing the Dashboard](#accessing-the-dashboard)
-- [3. Lab Exercise: Set Environment Variables](#3-lab-exercise-set-environment-variables)
-- [4. Lab Exercise: Deploy A SpringBoot application with an Elastic Search Backend](#4-lab-exercise-deploy-a-springboot-application-with-an-elastic-search-backend)
+- [4. Lab Exercise: Deploy a Spring Boot application with an Elasticsearch Backend](#4-lab-exercise-deploy-a-springboot-application-with-an-elastic-search-backend)
 
 <!-- /TOC -->
 ### 1. Install and Setup CLIs
@@ -28,40 +28,35 @@ What you download is the executable. After downloading, rename the file to `kube
 You can leverage the pks-cli and kubectl-cli that are in the `bin/` folder of this repository.
 
 ### 2. Lab Exercise: Set Environment Variables
-
 Prerequisite: Initialize the environment with required access variables. Please use the account and user that was provided to you for this lab exercise.
 
 Unix/Mac
 <pre>
-  export MY_USER=[ 'userX' that you were supplied with ]
-  export HARBOR_REGISTRY_URL="$MY_USER.harbor.pks.mcnichol.rocks"
-  export HARBOR_USERNAME="admin"
-  export HARBOR_PASSWORD="password"
-  export HARBOR_EMAIL="admin@example.com"
+export MY_USER=[ 'userX' that you were supplied with ]
+export HARBOR_REGISTRY_URL="$MY_USER.harbor.pks.mcnichol.rocks"
+export HARBOR_USERNAME="admin"
+export HARBOR_PASSWORD="password"
+export HARBOR_EMAIL="admin@example.com"
 </pre>
 
 Windows PowerShell
 <pre>
-  $env:MY_USER=[ 'userX' that you were supplied with ]
-  $env:HARBOR_REGISTRY_URL="$MY_USER.harbor.pks.mcnichol.rocks"
-  $env:HARBOR_USERNAME="admin"
-  $env:HARBOR_PASSWORD="password"
-  $env:HARBOR_EMAIL="admin@example.com"
+$env:MY_USER=[ 'userX' that you were supplied with ]
+$env:HARBOR_REGISTRY_URL="$MY_USER.harbor.pks.mcnichol.rocks"
+$env:HARBOR_USERNAME="admin"
+$env:HARBOR_PASSWORD="password"
+$env:HARBOR_EMAIL="admin@example.com"
 </pre>
 
 ### 3. Cluster Access and Validation
 #### Get Cluster Credentials
 You will need to retrieve the cluster credentials from PKS. First login using the the PKS credentials that were provided to you for this lab exercise.
 
-<pre>
-  pks login -a api.$MY_USER.pks.mcnichol.rocks -u $MY_USER -p password -k
-</pre>
+<pre>pks login -a api.$MY_USER.pks.mcnichol.rocks -u $MY_USER -p pas</pre>
 
 Now you can retrive your Kubernetes cluster credentials. Please use the cluster name that was provided to you for this lab exercise.
 
-<pre>
-  pks get-credentials $MY_USER-cluster 
-</pre>
+<pre>pks get-credentials $MY_USER-cluster </pre>
 
 #### Validating your Cluster
 Ensure that you can access the API Endpoints on the Master
@@ -69,11 +64,11 @@ Ensure that you can access the API Endpoints on the Master
 
 You should see something similar to the following:
 <pre>
-  Kubernetes master is running at https://userX.cluster.mcnichol.rocks:8443
-  Heapster is running at https://userX.cluster.mcnichol.rocks:8443/api/v1/namespaces/kube-system/services/heapster/proxy
-  KubeDNS is running at https://userX.cluster.mcnichol.rocks:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
-  kubernetes-dashboard is running at https://userX.cluster.mcnichol.rocks:8443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy
-  monitoring-influxdb is running at https://userX.cluster.mcnichol.rocks:8443/api/v1/namespaces/kube-system/services/monitoring-influxdb/proxy
+Kubernetes master is running at https://userX.cluster.mcnichol.rocks:8443
+Heapster is running at https://userX.cluster.mcnichol.rocks:8443/api/v1/namespaces/kube-system/services/heapster/proxy
+KubeDNS is running at https://userX.cluster.mcnichol.rocks:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+kubernetes-dashboard is running at https://userX.cluster.mcnichol.rocks:8443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy
+monitoring-influxdb is running at https://userX.cluster.mcnichol.rocks:8443/api/v1/namespaces/kube-system/services/monitoring-influxdb/proxy
 </pre>
 
 #### Accessing the Dashboard
