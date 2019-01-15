@@ -88,10 +88,10 @@ http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-da
 
 When prompted for choosing either the Kubeconfig or Token, choose Kubeconfig.  You will need to browse to `$HOME/.kube` and select the file named `config`.
 
-When deciding on a Web Browser you may want to use Firefox or Chrome as we have faced issues with Explorer.
+**Note 1:** When deciding on a Web Browser you may want to use Firefox or Chrome as we have faced issues with Explorer.
+**Note 2:** When using Mac you may need to enter `CMD` + `SHIFT` + `G` to navigate to `~/.kube/config`
 
-
-### 4. Lab Exercise: Deploy A Spring Boot application with an Elastic Search Backend
+### 4. Lab Exercise: Deploy A Spring Boot application with an Elasticsearch Backend
 1. **(Skip this step)** Provision a StorageClass for the Cluster. [This is provisioned at the Kubernetes cluster level and therefore no need to namespace qualify it]
 
 <ul>GCP:
@@ -101,9 +101,11 @@ When deciding on a Web Browser you may want to use Firefox or Chrome as we have 
 
 2. **(Skip this Step)** Create a user defined Namespace. Note: Update the command below to use the namespace that you are going to be delpoying into.
 <ul>Unix/Mac
-  <pre>kubectl create namespace geosearch-$(echo $USER_INDEX)
-  kubectl config set-context $(kubectl config current-context) --namespace=geosearch-$(echo $USER_INDEX)
-</pre></ul>
+  <pre>
+    kubectl create namespace geosearch-$(echo $USER_INDEX)
+    kubectl config set-context $(kubectl config current-context) --namespace=geosearch-$(echo $USER_INDEX)
+  </pre>
+</ul>
 
 <ul>Windows PowerShell
   <pre>kubectl create namespace geosearch-$(echo $env:USER_INDEX)
