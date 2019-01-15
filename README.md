@@ -77,24 +77,24 @@ To access Dashboard from your local workstation you must create a secure channel
 
 <pre>kubectl proxy</pre>
 
-Now access Dashboard at:
+Now access the dashboard at:
 
 http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/.
 
 When prompted for choosing either the Kubeconfig or Token, choose Kubeconfig.  You will need to browse to `$HOME/.kube` and select the file named `config`.
 
-**Note 1:** When deciding on a Web Browser you may want to use Firefox or Chrome as we have faced issues with Explorer.
-**Note 2:** When using Mac you may need to hit `CMD` + `SHIFT` + `G` and enter `~/.kube/config` to access the hidden dot-folder.
+*Note 1:* When deciding on a Web Browser you may want to use Firefox or Chrome as we have faced issues with Explorer.
+*Note 2:* When using Mac you may need to hit `CMD` + `SHIFT` + `G` and enter `~/.kube/config` to access the hidden dot-folder.
 
 ### 4. Lab Exercise: Deploy A Spring Boot application with an Elasticsearch Backend
-#### 1. **(Skip this step)** ~~Provision a StorageClass for the Cluster.~~ **This is provisioned at the Kubernetes cluster level and therefore no need to namespace qualify it**
+#### 1. *(Skip this step)* ~~Provision a StorageClass for the Cluster.~~ *This is provisioned at the Kubernetes cluster level and therefore no need to namespace qualify it*
 
 <ul>GCP:
   <pre>kubectl create -f https://raw.githubusercontent.com/mmcnichol/pks-workshop/application/master/Step_0_ProvisionStorageClass_GCP.yaml</pre>
 </ul>
 
 
-#### 2. **(Skip this Step)** ~~Create a user defined Namespace. Note: Update the command below to use the namespace that you are going to be delpoying into.~~
+#### 2. *(Skip this Step)* ~~Create a user defined Namespace. Note: Update the command below to use the namespace that you are going to be delpoying into.~~
 <ul>Unix/Mac
 <pre>
 kubectl create namespace geosearch-$(echo $USER_INDEX)
