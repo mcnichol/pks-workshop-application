@@ -84,7 +84,7 @@ http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-da
 When prompted for choosing either the Kubeconfig or Token, choose Kubeconfig.  You will need to browse to `$HOME/.kube` and select the file named `config`.
 
 **Note 1:** When deciding on a Web Browser you may want to use Firefox or Chrome as we have faced issues with Explorer.
-**Note 2:** When using Mac you may need to enter `CMD` + `SHIFT` + `G` to navigate to `~/.kube/config`
+**Note 2:** When using Mac you may need to hit `CMD` + `SHIFT` + `G` and enter `~/.kube/config` to access the hidden dot-folder.
 
 ### 4. Lab Exercise: Deploy A Spring Boot application with an Elasticsearch Backend
 1. **(Skip this step)** Provision a StorageClass for the Cluster. [This is provisioned at the Kubernetes cluster level and therefore no need to namespace qualify it]
