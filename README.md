@@ -27,7 +27,29 @@ What you download is the executable. After downloading, rename the file to `kube
 #### Alternatively
 You can leverage the pks-cli and kubectl-cli that are in the `bin/` folder of this repository.
 
-### 2. Cluster Access and Validation
+### 2. Lab Exercise: Set Environment Variables
+
+Prerequisite: Initialize the environment with required access variables. Please use the account and user that was provided to you for this lab exercise.
+
+Unix/Mac
+<pre>
+  export MY_USER=[ 'userX' that you were supplied with ]
+  export HARBOR_REGISTRY_URL="$MY_USER.harbor.pks.mcnichol.rocks"
+  export HARBOR_USERNAME="admin"
+  export HARBOR_PASSWORD="password"
+  export HARBOR_EMAIL="admin@example.com"
+</pre>
+
+Windows PowerShell
+<pre>
+  $env:MY_USER=[ 'userX' that you were supplied with ]
+  $env:HARBOR_REGISTRY_URL="$MY_USER.harbor.pks.mcnichol.rocks"
+  $env:HARBOR_USERNAME="admin"
+  $env:HARBOR_PASSWORD="password"
+  $env:HARBOR_EMAIL="admin@example.com"
+</pre>
+
+### 3. Cluster Access and Validation
 #### Get Cluster Credentials
 You will need to retrieve the cluster credentials from PKS. First login using the the PKS credentials that were provided to you for this lab exercise.
 
@@ -68,27 +90,6 @@ When prompted for choosing either the Kubeconfig or Token, choose Kubeconfig.  Y
 
 When deciding on a Web Browser you may want to use Firefox or Chrome as we have faced issues with Explorer.
 
-### 3. Lab Exercise: Set Environment Variables
-
-Prerequisite: Initialize the environment with your credentials for the registry. Please use the account and user index that was provided to you for this lab exercise.
-
-Unix/Mac
-<pre>
-  export MY_USER=[ UserX that you were supplied with ]
-  export HARBOR_REGISTRY_URL="$MY_USER.harbor.pks.mcnichol.rocks"
-  export HARBOR_USERNAME="admin"
-  export HARBOR_PASSWORD="password"
-  export HARBOR_EMAIL="admin@example.com"
-</pre>
-
-Windows PowerShell
-<pre>
-  $env:MY_USER=[ UserX that you were supplied with ]
-  $env:HARBOR_REGISTRY_URL="$MY_USER.harbor.pks.mcnichol.rocks"
-  $env:HARBOR_USERNAME="admin"
-  $env:HARBOR_PASSWORD="password"
-  $env:HARBOR_EMAIL="admin@example.com"
-</pre>
 
 ### 4. Lab Exercise: Deploy A Spring Boot application with an Elastic Search Backend
 1. **(Skip this step)** Provision a StorageClass for the Cluster. [This is provisioned at the Kubernetes cluster level and therefore no need to namespace qualify it]
