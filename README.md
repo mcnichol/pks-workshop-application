@@ -90,7 +90,7 @@ When prompted for choosing either the Kubeconfig or Token, choose Kubeconfig.  Y
 #### 1. *(Skip this step)* ~~Provision a StorageClass for the Cluster.~~ *This is provisioned at the Kubernetes cluster level and therefore no need to namespace qualify it*
 
 <ul>GCP:
-  <pre>kubectl create -f https://raw.githubusercontent.com/mmcnichol/pks-workshop/application/master/Step_0_ProvisionStorageClass_GCP.yaml</pre>
+<pre>kubectl create -f https://raw.githubusercontent.com/mmcnichol/pks-workshop/application/master/Step_0_ProvisionStorageClass_GCP.yaml</pre>
 </ul>
 
 
@@ -110,7 +110,13 @@ kubectl config set-context $(kubectl config current-context) --namespace=geosear
 
 #### 3. Create Harbor Registry Secret. Use the Registry credentials that was provided to you for this step.
 <ul>Unix/Mac
-<pre>kubectl create secret docker-registry harborsecret --docker-server="$(echo $HARBOR_REGISTRY_URL)" --docker-username="$(echo $HARBOR_USERNAME)" --docker-password="$(echo $HARBOR_PASSWORD)" --docker-email="$(echo $HARBOR_EMAIL)"</pre>
+<pre>
+kubectl create secret docker-registry harborsecret  \
+  --docker-server="$(echo $HARBOR_REGISTRY_URL)"    \
+  --docker-email="$(echo $HARBOR_EMAIL)"            \
+  --docker-username="$(echo $HARBOR_USERNAME)"      \
+  --docker-password="$(echo $HARBOR_PASSWORD)"      
+</pre>
 </ul>
 
 <ul>Windows PowerShell
