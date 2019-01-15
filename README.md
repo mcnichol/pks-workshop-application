@@ -24,20 +24,21 @@ You can install the kubectl CLI from PivNet as well, https://network.pivotal.io/
 
 What you download is the executable. After downloading, rename the file to `kubectl`, move it to where you like and make sure it's in your path.
 
-For reference, here are some other ways to install, https://kubernetes.io/docs/tasks/tools/install-kubectl
+#### Alternatively
+You can leverage the pks-cli and kubectl-cli that are in the `bin/` folder of this repository.
 
 ### 2. Cluster Access and Validation
 #### Get Cluster Credentials
 You will need to retrieve the cluster credentials from PKS. First login using the the PKS credentials that were provided to you for this lab exercise.
 
 <pre>
-pks login -a api.pks.cfrocket.com -u USERNAME -p PASSWORD -k
+  pks login -a api.$MY_USER.pks.mcnichol.rocks -u $MY_USER -p password -k
 </pre>
 
 Now you can retrive your Kubernetes cluster credentials. Please use the cluster name that was provided to you for this lab exercise.
 
 <pre>
-pks get-credentials CLUSTER-NAME
+  pks get-credentials $MY_USER-cluster 
 </pre>
 
 #### Validating your Cluster
@@ -46,11 +47,11 @@ Ensure that you can access the API Endpoints on the Master
 
 You should see something similar to the following:
 <pre>
-Kubernetes master is running at https://workshop.clusters.pks.cfrocket.com:8443
-Heapster is running at https://workshop.clusters.pks.cfrocket.com:8443/api/v1/namespaces/kube-system/services/heapster/proxy
-KubeDNS is running at https://workshop.clusters.pks.cfrocket.com:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
-kubernetes-dashboard is running at https://workshop.clusters.pks.cfrocket.com:8443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy
-monitoring-influxdb is running at https://workshop.clusters.pks.cfrocket.com:8443/api/v1/namespaces/kube-system/services/monitoring-influxdb/proxy
+  Kubernetes master is running at https://userX.cluster.mcnichol.rocks:8443
+  Heapster is running at https://userX.cluster.mcnichol.rocks:8443/api/v1/namespaces/kube-system/services/heapster/proxy
+  KubeDNS is running at https://userX.cluster.mcnichol.rocks:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+  kubernetes-dashboard is running at https://userX.cluster.mcnichol.rocks:8443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy
+  monitoring-influxdb is running at https://userX.cluster.mcnichol.rocks:8443/api/v1/namespaces/kube-system/services/monitoring-influxdb/proxy
 </pre>
 
 #### Accessing the Dashboard
@@ -63,9 +64,9 @@ Now access Dashboard at:
 
 http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/.
 
-When prompted for choosing either the Kubeconfig or Token, choose Kubeconfig.  You will need to browse to HOME-DIR/.kube and select the file named `config`.
+When prompted for choosing either the Kubeconfig or Token, choose Kubeconfig.  You will need to browse to `$HOME/.kube` and select the file named `config`.
 
-On Windows, you may want to use Firefox or Chrome as Explorer has some issues.
+When deciding on a Web Browser you may want to use Firefox or Chrome as we have faced issues with Explorer.
 
 ### 3. Lab Exercise: Set Environment Variables
 
@@ -73,69 +74,65 @@ Prerequisite: Initialize the environment with your credentials for the registry.
 
 Unix/Mac
 <pre>
-export USER_INDEX="1"
-export HARBOR_REGISTRY_URL="harbor.pks.cfrocket.com"
-export HARBOR_USERNAME="User1"
-export HARBOR_PASSWORD="Pivotal1"
-export HARBOR_EMAIL="User1@acme.org"
+  export MY_USER=[ UserX that you were supplied with ]
+  export HARBOR_REGISTRY_URL="$MY_USER.harbor.pks.mcnichol.rocks"
+  export HARBOR_USERNAME="admin"
+  export HARBOR_PASSWORD="password"
+  export HARBOR_EMAIL="admin@example.com"
 </pre>
 
 Windows PowerShell
 <pre>
-$env:USER_INDEX="1"
-$env:HARBOR_REGISTRY_URL="harbor.pks.cfrocket.com"
-$env:HARBOR_USERNAME="User1"
-$env:HARBOR_PASSWORD="Pivotal1"
-$env:HARBOR_EMAIL="User1@acme.org"
+  $env:MY_USER=[ UserX that you were supplied with ]
+  $env:HARBOR_REGISTRY_URL="$MY_USER.harbor.pks.mcnichol.rocks"
+  $env:HARBOR_USERNAME="admin"
+  $env:HARBOR_PASSWORD="password"
+  $env:HARBOR_EMAIL="admin@example.com"
 </pre>
 
-### 4. Lab Exercise: Deploy A SpringBoot application with an Elastic Search Backend
-1. **(Skip this step)** Provision a StorageClass for the Cluster. This is provisioned at the Kubernetes cluster level and therefore no need to namespace qualify it.
+### 4. Lab Exercise: Deploy A Spring Boot application with an Elastic Search Backend
+1. **(Skip this step)** Provision a StorageClass for the Cluster. [This is provisioned at the Kubernetes cluster level and therefore no need to namespace qualify it]
 
 <ul>GCP:
-
-  <pre>kubectl create -f https://raw.githubusercontent.com/gvijayar/pks-workshop/master/Step_0_ProvisionStorageClass_GCP.yaml</pre>
+  <pre>kubectl create -f https://raw.githubusercontent.com/mmcnichol/pks-workshop/application/master/Step_0_ProvisionStorageClass_GCP.yaml</pre>
 </ul>
 
 
-<ul>vSphere:
-
-  <pre>kubectl create -f https://raw.githubusercontent.com/gvijayar/pks-workshop/master/Step_0_ProvisionStorageClass_vSphere.yaml</pre>
-</ul>
-
-2. Create a user defined Namespace. Note: Update the command below to use the namespace that you are going to be delpoying into.
+2. **(Skip this Step)** Create a user defined Namespace. Note: Update the command below to use the namespace that you are going to be delpoying into.
 <ul>Unix/Mac
-<pre>kubectl create namespace geosearch-$(echo $USER_INDEX)
-kubectl config set-context $(kubectl config current-context) --namespace=geosearch-$(echo $USER_INDEX)
+  <pre>kubectl create namespace geosearch-$(echo $USER_INDEX)
+  kubectl config set-context $(kubectl config current-context) --namespace=geosearch-$(echo $USER_INDEX)
 </pre></ul>
 
 <ul>Windows PowerShell
-<pre>kubectl create namespace geosearch-$(echo $env:USER_INDEX)
-kubectl config set-context $(kubectl config current-context) --namespace=geosearch-$(echo $env:USER_INDEX)
+  <pre>kubectl create namespace geosearch-$(echo $env:USER_INDEX)
+  kubectl config set-context $(kubectl config current-context) --namespace=geosearch-$(echo $env:USER_INDEX)
 </pre></ul>
 
 
 3. Create Harbor Registry Secret. Use the Registry credentials that was provided to you for this step.
 <ul>Unix/Mac
-<pre>kubectl create secret docker-registry harborsecret --docker-server="$(echo $HARBOR_REGISTRY_URL)" --docker-username="$(echo $HARBOR_USERNAME)" --docker-password="$(echo $HARBOR_PASSWORD)" --docker-email="$(echo $HARBOR_EMAIL)"</pre>
+  <pre>kubectl create secret docker-registry harborsecret --docker-server="$(echo $HARBOR_REGISTRY_URL)" --docker-username="$(echo $HARBOR_USERNAME)" --docker-password="$(echo $HARBOR_PASSWORD)" --docker-email="$(echo $HARBOR_EMAIL)"</pre>
 </ul>
 
 <ul>Windows PowerShell
-<pre>kubectl create secret docker-registry harborsecret --docker-server="$(echo $env:HARBOR_REGISTRY_URL)" --docker-username="$(echo $env:HARBOR_USERNAME)" --docker-password="$(echo $env:HARBOR_PASSWORD)" --docker-email="$(echo $env:HARBOR_EMAIL)"</pre>
+  <pre>kubectl create secret docker-registry harborsecret --docker-server="$(echo $env:HARBOR_REGISTRY_URL)" --docker-username="$(echo $env:HARBOR_USERNAME)" --docker-password="$(echo $env:HARBOR_PASSWORD)" --docker-email="$(echo $env:HARBOR_EMAIL)"</pre>
 </ul>
 
 4. Create a new Service Account and Image pull secret
 <ul>Unix/Mac
-<pre>
-kubectl create serviceaccount userserviceaccount
-kubectl patch serviceaccount userserviceaccount -p "{\"imagePullSecrets\": [{\"name\": \"harborsecret\"}]}"
-</pre></ul>
+  <pre>
+    kubectl create serviceaccount userserviceaccount
+    kubectl patch serviceaccount userserviceaccount -p "{\"imagePullSecrets\": [{\"name\": \"harborsecret\"}]}"
+  </pre>
+</ul>
 
 <ul>Windows PowerShell
-<pre>
-kubectl create serviceaccount userserviceaccount
-kubectl patch serviceaccount userserviceaccount -p '{\"imagePullSecrets\": [{\"name\": \"harborsecret\"}]}'
-</pre></ul>
+  <pre>
+    kubectl create serviceaccount userserviceaccount
+    kubectl patch serviceaccount userserviceaccount -p '{\"imagePullSecrets\": [{\"name\": \"harborsecret\"}]}'
+  </pre>
+</ul>
 
 5. Create the Storage Volume
 <ul><pre>kubectl create -f https://raw.githubusercontent.com/gvijayar/pks-workshop/master/Step_1_ProvisionStorage.yaml</pre></ul>
@@ -152,7 +149,7 @@ kubectl patch serviceaccount userserviceaccount -p '{\"imagePullSecrets\": [{\"n
 9. Deploy the SpringBoot Geosearch Application
 <ul><pre>kubectl create -f https://raw.githubusercontent.com/gvijayar/pks-workshop/master/Step_5_DeploySpringBootApp.yaml</pre></ul>
 
-10. Expose the SpringBoot Application. This can be done in a couple of ways. We will look at two ways of doing it in this example.
+10. Expose the Spring Boot Application. This can be done in a couple of ways. We will look at two ways of doing it in this example.
 
 <ul>Exposing with the LoadBalancer
 	<pre>kubectl create -f https://raw.githubusercontent.com/gvijayar/pks-workshop/master/Step_6_ExposeSpringBootApp.yaml</pre>
