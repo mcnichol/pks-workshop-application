@@ -120,7 +120,13 @@ kubectl create secret docker-registry harborsecret  \
 </ul>
 
 <ul>Windows PowerShell
-  <pre>kubectl create secret docker-registry harborsecret --docker-server="$(echo $env:HARBOR_REGISTRY_URL)" --docker-username="$(echo $env:HARBOR_USERNAME)" --docker-password="$(echo $env:HARBOR_PASSWORD)" --docker-email="$(echo $env:HARBOR_EMAIL)"</pre>
+<pre>
+kubectl create secret docker-registry harborsecret    `
+  --docker-server="$(echo $env:HARBOR_REGISTRY_URL)"  `
+  --docker-email="$(echo $env:HARBOR_EMAIL)"          `
+  --docker-username="$(echo $env:HARBOR_USERNAME)"    `
+  --docker-password="$(echo $env:HARBOR_PASSWORD)"
+</pre>
 </ul>
 
 #### 4. Create a new Service Account and Image pull secret
