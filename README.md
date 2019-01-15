@@ -129,19 +129,23 @@ kubectl create secret docker-registry harborsecret    `
 </pre>
 </ul>
 
+*Note 1: This can be verified that it was entered correctly with the following command that leverages JQ:
+Unix/Mac: `kubectl get secret harborsecret -o json | jq -r '.data.".dockerconfigjson"' | base64 --decode`
+Windows PowerShell: `kubectl get secret harborsecret -o json` (and decrypt the `.data.dockerconfigjson` with a base64 decoder
+
 #### 4. Create a new Service Account and Image pull secret
 <ul>Unix/Mac
-  <pre>
-    kubectl create serviceaccount userserviceaccount
-    kubectl patch serviceaccount userserviceaccount -p "{\"imagePullSecrets\": [{\"name\": \"harborsecret\"}]}"
-  </pre>
+<pre>
+kubectl create serviceaccount userserviceaccount
+kubectl patch serviceaccount userserviceaccount -p "{\"imagePullSecrets\": [{\"name\": \"harborsecret\"}]}"
+</pre>
 </ul>
 
 <ul>Windows PowerShell
-  <pre>
-    kubectl create serviceaccount userserviceaccount
-    kubectl patch serviceaccount userserviceaccount -p '{\"imagePullSecrets\": [{\"name\": \"harborsecret\"}]}'
-  </pre>
+<pre>
+kubectl create serviceaccount userserviceaccount
+kubectl patch serviceaccount userserviceaccount -p '{\"imagePullSecrets\": [{\"name\": \"harborsecret\"}]}'
+</pre>
 </ul>
 
 #### 5. Create the Storage Volume
